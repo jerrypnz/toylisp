@@ -25,11 +25,18 @@ spec = do
     let testVal1 = AtomValue $ String "123"
     let testVal2 = AtomValue $ Int 12
     let testVal3 = AtomValue Nil
-    let testEnv = pushEnv emptyEnv  [(Sym "foo", testVal1),
-                                     (Sym "bar", testVal2),
-                                     (Sym "foobar", testVal3)]
+    let testEnv = pushEnv emptyEnv [(Sym "foo", testVal1),
+                                    (Sym "bar", testVal2),
+                                    (Sym "foobar", testVal3)]
 
-    it "returns correct value from env" $ do
+    it "returns correct value from current env" $ do
       lookupEnv testEnv (Sym "foo")    `shouldBe` testVal1
       lookupEnv testEnv (Sym "bar")    `shouldBe` testVal2
       lookupEnv testEnv (Sym "foobar") `shouldBe` testVal3
+
+    let newEnv = pushEnv testEnv []
+
+    it "returns correct value from parent env" $ do
+      lookupEnv newEnv (Sym "foo")    `shouldBe` testVal1
+      lookupEnv newEnv (Sym "bar")    `shouldBe` testVal2
+      lookupEnv newEnv (Sym "foobar") `shouldBe` testVal3
