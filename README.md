@@ -1,4 +1,4 @@
-* Toylisp
+# Toylisp
 
 A toy lisp interpreter written in Haskell.
 
